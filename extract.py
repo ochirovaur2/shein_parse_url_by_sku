@@ -120,8 +120,7 @@ font = Font(size = "10", name = 'Arial')
 ################### заголовок 
 write_cell('SKU', 		sheet, 1, 1, align_center, font)
 write_cell('URL', 		sheet, 1, 2, align_center, font)
-
-
+write_cell('Name', 		sheet, 1, 3, align_center, font)
 
 for id, sku in enumerate(skus, start=1):
 	
@@ -137,7 +136,7 @@ for id, sku in enumerate(skus, start=1):
 		
 
 		url = json.loads('{'+re.search(r'"goodsDetailUrl":"[a-zA-Z0-9_.+-:#]+"', data[1]).group(0)+'}')['goodsDetailUrl']
-
+		goods_name = json.loads('{'+re.search(r'"goods_name":"(.*?)"', data[1]).group(0)+'}')['goods_name']
 		full_url = f"https://ru.shein.com{url}"
 		
 
@@ -145,13 +144,14 @@ for id, sku in enumerate(skus, start=1):
 		print(f'{sku}: {full_url}')
 		write_cell(sku, 		sheet, row_i, 1, align_default, font)
 		write_cell(full_url, 		sheet, row_i, 2, align_default, font)
-	
+		write_cell(goods_name, 		sheet, row_i, 3, align_default, font)
+		
 	
 	except:
 		print('ошибка', sku)
 		write_cell(sku, 		sheet, row_i, 1, align_default, font)
 		write_cell("ошибка", 		sheet, row_i, 2, align_default, font)
-		
+		write_cell("ошибка", 		sheet, row_i, 3, align_default, font)
 	
 	
 		
